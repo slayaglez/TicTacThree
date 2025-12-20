@@ -1,0 +1,340 @@
+<!--
+@author slayaglez
+@version 1.1.0
+@date 20 Dec 2025
+-->
+<html>
+
+<head>
+    <title>TicTacToe</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background: #308c30;
+            background: radial-gradient(circle, rgba(48, 140, 48, 1) 0%, rgba(56, 79, 56, 1) 100%);
+        }
+
+        #githublogo {
+            width: 5vw;
+        }
+
+        footer {
+            display: flex;
+            background-color: rgb(59, 0, 0);
+            color: #f0e8a0;
+            align-items: center;
+            gap: 2vw;
+            justify-content: center;
+            padding-top: 1vh;
+            padding-bottom: 1vh;
+            font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+            font-size: 2vh;
+            font-weight: bold;
+        }
+
+        .board {
+            justify-content: center;
+            display: grid;
+            grid-template-columns: max-content max-content max-content;
+            row-gap: 10vh;
+            column-gap: 8vw;
+            padding: 4vw;
+            background-image: url(./img/gameGrid2.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 60vw;
+            background-color: transparent;
+        }
+
+        .figure {
+            width: 10vw;
+        }
+
+        #menu {
+            display: flex;
+            justify-content: center;
+            padding: 3vw;
+            gap: 3vw;
+        }
+
+        #menu button {
+            color: #cec25a;
+            padding: 2vw;
+            font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+            font-size: 3vw;
+            font-weight: bold;
+            border-radius: 4vw;
+            margin-bottom: 1vh;
+            border: rgb(61, 0, 0) 8px solid;
+            background: #570303;
+            background: radial-gradient(circle, rgba(87, 3, 3, 1) 0%, rgba(140, 0, 0, 1) 100%);
+        }
+
+        #menu button:hover {
+            
+            color: #fff388;
+            padding: 2vw;
+            font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+            font-size: 3vw;
+            font-weight: bold;
+            border-radius: 4vw;
+            margin-bottom: 1vh;
+            border: rgb(61, 0, 0) 8px solid;
+            background: #360202;
+            background: radial-gradient(circle, rgb(58, 2, 2) 0%, rgb(97, 0, 0) 100%);
+        }
+
+        .board>button {
+            background-color: transparent;
+            border: transparent;
+        }
+
+        button>img {
+            visibility: hidden;
+        }
+
+        #winner_wrapper{
+            display: flex;
+            justify-content: center;
+            color: #cec25a;
+            padding: 2vw;
+            font-family: 'Franklin Gothic Medium', Arial, sans-serif;
+            font-size: 3vw;
+            font-weight: bold;
+            margin-bottom: 1vh;
+            visibility: hidden;
+        }
+
+        @keyframes flashy {
+            0% {opacity: 0;}
+            50% {opacity: 1;}
+            100% {opacity: 0;}
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="board">
+        <button id="a1" onclick="election(this)"><img src="./img/circle.svg" class="figure"></button>
+        <button id="a2" onclick="election(this)"><img src="./img/circle.svg" class="figure"></button>
+        <button id="a3" onclick="election(this)"><img src="./img/circle.svg" class="figure"></button>
+        <button id="b1" onclick="election(this)"><img src="./img/circle.svg" class="figure"></button>
+        <button id="b2" onclick="election(this)"><img src="./img/circle.svg" class="figure"></button>
+        <button id="b3" onclick="election(this)"><img src="./img/circle.svg" class="figure"></button>
+        <button id="c1" onclick="election(this)"><img src="./img/circle.svg" class="figure"></button>
+        <button id="c2" onclick="election(this)"><img src="./img/circle.svg" class="figure"></button>
+        <button id="c3" onclick="election(this)"><img src="./img/circle.svg" class="figure"></button>
+    </div>
+    <div id="winner_wrapper">
+        <h2 id="winner"></h2>
+    </div>
+    <div id="menu">
+        <button onclick="restart()">Restart</button>
+        <a href="./rules.html"><button>Rules</button></a>
+    </div>
+    <footer>
+        See more at my github!
+        <a href="https://github.com/slayaglez"><img id="githublogo" src="./img/github.png"></a>
+    </footer>
+
+
+    <script>
+
+        const imgArray = Array.from(document.querySelectorAll('.board button img'));
+        const buttonArray = Array.from(document.querySelectorAll('.board button'));
+
+        // Declaro el contador de jugadas
+        let playerCount = 0;
+        let playerErase = 0;
+
+        let tablero = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'];
+        let imgHistory = [];
+        let buttonHistory = [];
+
+        const winnerSpace = document.getElementById('winner');
+
+        // Si player count es par 'O' si es impar 'X'
+        function election(b) {
+
+            const figure = b.querySelector('img');
+
+            if (playerCount % 2 == 0) {
+                figure.src = './img/circle.svg';
+
+                if (b.id == 'a1') { tablero[0] = 'O'; }
+                if (b.id == 'a2') { tablero[1] = 'O'; }
+                if (b.id == 'a3') { tablero[2] = 'O'; }
+                if (b.id == 'b1') { tablero[3] = 'O'; }
+                if (b.id == 'b2') { tablero[4] = 'O'; }
+                if (b.id == 'b3') { tablero[5] = 'O'; }
+                if (b.id == 'c1') { tablero[6] = 'O'; }
+                if (b.id == 'c2') { tablero[7] = 'O'; }
+                if (b.id == 'c3') { tablero[8] = 'O'; }
+
+            } else {
+                figure.src = './img/cross.svg';
+
+                if (b.id == 'a1') { tablero[0] = 'X'; }
+                if (b.id == 'a2') { tablero[1] = 'X'; }
+                if (b.id == 'a3') { tablero[2] = 'X'; }
+                if (b.id == 'b1') { tablero[3] = 'X'; }
+                if (b.id == 'b2') { tablero[4] = 'X'; }
+                if (b.id == 'b3') { tablero[5] = 'X'; }
+                if (b.id == 'c1') { tablero[6] = 'X'; }
+                if (b.id == 'c2') { tablero[7] = 'X'; }
+                if (b.id == 'c3') { tablero[8] = 'X'; }
+
+            }
+            figure.style.visibility = 'visible';
+            b.disabled = true;
+            playerCount++;
+
+            // guardo en un array el historial de botones pulsados
+            imgHistory.push(figure);
+            buttonHistory.push(b);
+
+            if(playerCount>=6){
+                // animacion
+                imgHistory[playerErase].style.animationName = 'flashy';
+                imgHistory[playerErase].style.animationDuration = '2s';
+                imgHistory[playerErase].style.animationIterationCount = 'infinite';
+                playerErase++;
+            }
+            
+            if(playerCount>=7){
+                // desaparece
+                buttonHistory[playerErase-2].disabled = false;
+                imgHistory[playerErase-2].style.visibility='hidden';
+                imgHistory[playerErase-2].style.animationDuration = '0s';
+                imgHistory[playerErase-2].style.animationIterationCount = '0';
+                if (buttonHistory[playerErase-2].id == 'a1') { tablero[0] = 'a'; }
+                if (buttonHistory[playerErase-2].id == 'a2') { tablero[1] = 'a'; }
+                if (buttonHistory[playerErase-2].id == 'a3') { tablero[2] = 'a'; }
+                if (buttonHistory[playerErase-2].id == 'b1') { tablero[3] = 'a'; }
+                if (buttonHistory[playerErase-2].id == 'b2') { tablero[4] = 'a'; }
+                if (buttonHistory[playerErase-2].id == 'b3') { tablero[5] = 'a'; }
+                if (buttonHistory[playerErase-2].id == 'c1') { tablero[6] = 'a'; }
+                if (buttonHistory[playerErase-2].id == 'c2') { tablero[7] = 'a'; }
+                if (buttonHistory[playerErase-2].id == 'c3') { tablero[8] = 'a'; }
+                console.log(tablero);
+            }    
+            console.log(tablero);
+            checkWinner();        
+        }
+
+        // Reinicia el juego
+        function restart() {
+            tablero = ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'];
+            for (let i = 0; i < imgArray.length; i++) {
+                imgArray[i].style.visibility = 'hidden';
+                buttonArray[i].disabled = false;
+            }
+            imgHistory = [];
+            buttonHistory = [];
+            imgHistory[playerErase].style.animationDuration = '0s';
+            imgHistory[playerErase].style.animationIterationCount = '0';
+            winnerSpace.style.visibility='hidden';
+            playerCount = 0;
+            playerErase = 0;
+        }
+
+        function checkWinner() {
+            // O
+            if (tablero[0] == 'O' && tablero[1] == 'O' && tablero[2] == 'O') {
+                winnerMsg('O');
+                return;
+            }
+            if (tablero[3] == 'O' && tablero[4] == 'O' && tablero[5] == 'O') {
+                winnerMsg('O');
+                return;
+            }
+            if (tablero[6] == 'O' && tablero[7] == 'O' && tablero[8] == 'O') {
+                winnerMsg('O');
+                return;
+            }
+            if (tablero[0] == 'O' && tablero[3] == 'O' && tablero[6] == 'O') {
+                winnerMsg('O');
+                return;
+            }
+            if (tablero[1] == 'O' && tablero[4] == 'O' && tablero[7] == 'O') {
+                winnerMsg('O');
+                return;
+            }
+            if (tablero[2] == 'O' && tablero[5] == 'O' && tablero[8] == 'O') {
+                winnerMsg('O');
+                return;
+            }
+            if (tablero[0] == 'O' && tablero[4] == 'O' && tablero[8] == 'O') {
+                winnerMsg('O');
+                return;
+            }
+            if (tablero[2] == 'O' && tablero[4] == 'O' && tablero[6] == 'O') {
+                winnerMsg('O');
+                return;
+            }
+
+
+            // X
+            if (tablero[0] == 'X' && tablero[1] == 'X' && tablero[2] == 'X') {
+                winnerMsg('X');
+                return;
+            }
+            if (tablero[3] == 'X' && tablero[4] == 'X' && tablero[5] == 'X') {
+                winnerMsg('X');
+                return;
+            }
+            if (tablero[6] == 'X' && tablero[7] == 'X' && tablero[8] == 'X') {
+                winnerMsg('X');
+                return;
+            }
+            if (tablero[0] == 'X' && tablero[3] == 'X' && tablero[6] == 'X') {
+                winnerMsg('X');
+                return;
+            }
+            if (tablero[1] == 'X' && tablero[4] == 'X' && tablero[7] == 'X') {
+                winnerMsg('X');
+                return;
+            }
+            if (tablero[2] == 'X' && tablero[5] == 'X' && tablero[8] == 'X') {
+                winnerMsg('X');
+                return;
+            }
+            if (tablero[0] == 'X' && tablero[4] == 'X' && tablero[8] == 'X') {
+                winnerMsg('X');
+                return;
+            }
+            if (tablero[2] == 'X' && tablero[4] == 'X' && tablero[6] == 'X') {
+                winnerMsg('X');
+                return;
+            }
+            if (   tablero[0]!='a' && tablero[1]!='a' && tablero[2]!='a' 
+                && tablero[3]!='a' && tablero[4]!='a' && tablero[5]!='a' 
+                && tablero[6]!='a' && tablero[7]!='a' && tablero[8]!='a' ) {
+                    winnerMsg('E');
+                    return;
+                }
+            
+            return;
+        }
+
+        function winnerMsg(jugador) {
+            
+            winnerSpace.style.visibility='visible';
+            if(jugador=='E'){
+                winnerSpace.innerText = "Draw";
+            } else {
+                winnerSpace.innerText = "The winner is: " + jugador;
+            }
+            
+            for (let i = 0; i < imgArray.length; i++) {
+                buttonArray[i].disabled = true;
+            }
+
+            
+        }
+    </script>
+</body>
+
+</html>
