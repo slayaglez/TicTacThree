@@ -1,6 +1,6 @@
 <!--
 @author slayaglez
-@version 1.1.0
+@version 1.1.2
 @date 20 Dec 2025
 -->
 <html>
@@ -68,21 +68,17 @@
 
         #rules {
             display: flex;
-            gap: 8vw;
+            gap: 2vh;
             padding: 6vw;
         }
 
-        p,
-        h2 {
+        p{
             color: #f0e8a0;
             font-family: 'Franklin Gothic Medium', Arial, sans-serif;
-            font-size: 2vh;
+            font-size: 2.5vh;
             font-weight: bold;
         }
 
-        h2 {
-            font-size: 3vh;
-        }
 
         #spanish,
         #english {
@@ -92,6 +88,13 @@
             background: radial-gradient(circle, rgb(58, 2, 2) 0%, rgb(97, 0, 0) 100%);
             padding: 2vw;
             border-radius: 4vw;
+            max-width: 20vw;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        #rules img{
+            height: 10vh;
         }
     </style>
 </head>
@@ -99,7 +102,7 @@
 <body>
     <div id="rules">
         <div id="spanish">
-            <h2>Español</h2>
+            <img src="./img/spanish.png">
             <p>¡Haz tres en raya!</p>
             <p>Usa tres figuras para conseguir tres en raya. Cuidado, solamente habrán
                 tres de tus figuras en el tablero. Al colocar la siguiente, la primera
@@ -107,7 +110,7 @@
             <p>¡Buena suerte!</p>
         </div>
         <div id="english">
-            <h2>English</h2>
+            <img src="./img/english.png">
             <p>Make three in a row!</p>
             <p>Use three figures to make thre in a row. Watch out, there can only be
                 three figures at a time in the board. Once you place your next figure,
