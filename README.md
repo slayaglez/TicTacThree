@@ -1,4 +1,4 @@
-<img src="tictacthree_header.png">
+<img src="./img/tictacthree_header.png">
 
 # TicTacThree
 <img src="./img/english.png" style="height:3vh"> The classic game of tictactoe but with a modification that makes it way more fun. 
